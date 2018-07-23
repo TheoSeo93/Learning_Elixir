@@ -14,6 +14,19 @@ defmodule Cards do
     end
 
 
+    @doc """
+      Shuffles a deck
+    """
+  def shuffle(deck) do
+    Enum.shuffle(deck)
+  end
+  @doc """
+    Determines if a specific hand is in the deck
+  """
+  def contains?(deck, hand) do
+    Enum.member?(deck,hand)
+  end
+
   @doc """
     Divides a deck into a hand the reminder of the deck
     The hand_size argument indicates how many cards should
@@ -26,23 +39,22 @@ defmodule Cards do
       ["Ace of Spades"]
 
   """
-  def shuffle(deck) do
-    Enum.shuffle(deck)
-  end
-
-  def contains?(deck, hand) do
-    Enum.member?(deck,hand)
-  end
-
   def deal(deck, hand_size) do
     Enum.split(deck,hand_size)
   end
 
+  @doc """
+    Saves the deck into a file
+  """
   def save(deck, filename) do
     binary = :erlang.term_to_binary(deck)
     File.write(filename,binary)
   end
 
+  @doc """
+    Loads the file with the filename
+    Error if there is no such file
+  """
   def load(filename) do
     {status, binary}=File.read(filename)
 
@@ -51,7 +63,9 @@ defmodule Cards do
       {:error, _reason} -> "That file does not exist"
     end
   end
-
+  @doc """
+    Shuffles a deck, and deals depending on the hand_size, using pipe Operator
+  """
   def create_hand(hand_size) do
     # deck = Cards.create_deck
     # deck = Cards.shuffle(deck)
